@@ -20,12 +20,12 @@ export class AppComponent {
     clipboard.addMatcher('*', this.customImagePasteHandler);
   }
 
-  getMessage(): string {
-    return this.message;
-  }
-
-  contentChanged(obj: any): void {
-    this.message = obj.html;
+  customImagePasteHandler(node: HTMLElement, delta: Delta) {
+    if (node && delta) {
+      console.log(node);
+      console.log(delta);
+    }
+    return delta;
   }
 
   /**
@@ -47,7 +47,7 @@ export class AppComponent {
       });
     }
   }
-  
+
   insertImageAtRange(base64String) {
     const range: RangeStatic = this.quill.getSelection();
     this.quill.insertEmbed(range.index, 'image', base64String, 'user');
@@ -88,11 +88,11 @@ export class AppComponent {
     });
   }
 
-  customImagePasteHandler(node: HTMLElement, delta: Delta) {
-    if (node && delta) {
-      console.log(node);
-      console.log(delta);
-    }
-    return delta;
+  getMessage(): string {
+    return this.message;
+  }
+
+  contentChanged(obj: any): void {
+    this.message = obj.html;
   }
 }
